@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DasboardController;
+use App\Http\Controllers\ProduksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/login',[DasboardController::class,'index']);
-Route::get('/dasboard',[DasboardController::class,'index']);
+// Route::get('/dasboard',[DasboardController::class,'index']);
+Route::get('/',[DasboardController::class,'index']);
+Route::get('/produksi',[ProduksiController::class,'index']);
