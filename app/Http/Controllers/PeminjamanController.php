@@ -16,8 +16,24 @@ class PeminjamanController extends Controller
     {
 
         $peminjaman = Peminjaman::count() > 0
-            ? Peminjaman::first()->paginate(5) :
+            ? Peminjaman::join('pegawai', 'peminjaman.id_pegawai', '=', 'pegawai.id_pegawai')
+                ->join('mesin', 'peminjaman.id_mesin', '=', 'mesin.id_mesin')
+                ->join('sparepart', 'peminjaman.id_sparepart', '=', 'sparepart.id_sparepart')
+                ->select(
+                    'peminjaman.id_peminjaman',
+                    'pegawai.id_pegawai',
+                    'mesin.id_mesin',
+                    'sparepart.id_sparepart',
+                    'pegawai.nm_pegawai as peminjam',
+                    'mesin.nm_mesin',
+                    'peminjaman.tgl_peminjaman',
+                    'peminjaman.qty',
+                    'peminjaman.status',
+                    'sparepart.nm_sparepart'
+                )
+                ->paginate(5) :
             collect();
+
         return view('peminjaman.viewpeminjaman', compact('peminjaman'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -31,8 +47,8 @@ class PeminjamanController extends Controller
         $spareparts = Sparepart::get();
         $pegawais = Pegawai::get();
         $mesins = Mesin::get();
-        $dateNow = Carbon::now('DD-MM-YYYY');
-        return view('peminjaman.tambahpeminjaman',compact('mesins','spareparts','pegawais','dateNow'));
+        $dateNow = Carbon::now();
+        return view('peminjaman.tambahpeminjaman', compact('mesins', 'spareparts', 'pegawais', 'dateNow'));
     }
 
     /**
@@ -42,15 +58,20 @@ class PeminjamanController extends Controller
     {
 
         $request->validate([
-            'nm_devisi' => 'required',
-            'ket_devisi' => 'required',
+            'sparepart' => 'required',
+            'peminjam' => 'required',
+            'mesin' => 'required',
         ]);
 
-        $dataDevisi = new Peminjaman();
-        $dataDevisi->nm_devisi = $request->nm_devisi;
-        $dataDevisi->ket_devisi = $request->ket_devisi;
+        $dataPeminjaman = new Peminjaman();
+        $dataPeminjaman->id_pegawai = $request->peminjam;
+        $dataPeminjaman->id_mesin = $request->mesin;
+        $dataPeminjaman->id_sparepart = $request->sparepart;
+        $dataPeminjaman->qty = $request->qty;
+        $dataPeminjaman->tgl_peminjaman = Carbon::now();;
+        $dataPeminjaman->status = 'belum dikembalikan';
 
-        $dataDevisi->save();
+        $dataPeminjaman->save();
         return redirect()->route('peminjaman');
         // return redirect()->route('devisi.index')
         //     ->with('success', 'Jenis Tagihan Berhasil Ditambah');

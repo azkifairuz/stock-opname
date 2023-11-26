@@ -5,7 +5,7 @@
 ])
 @section('content')
 
-<form action="{{ route('add-rak-action') }}" method="POST">
+<form action="{{ route('add-peminjaman-action') }}" method="POST">
   @csrf
   <div class="col-md-6">
     <div class="card card-primary">
@@ -16,12 +16,12 @@
 
         <div class="form-group">
           <label>Sparepart:</label>
-          <select class="form-control select2" style="width: 100%;">
+          <select class="form-control select2"  name="sparepart" style="width: 100%;">
             @if(count($spareparts) === 0)
             <option disabled="disabled">data sparepart kosong</option>
             @endif
             @foreach($spareparts as $sparepart)
-              <option  name="sparepart" value="{{$sparepart->id_sparepart}}">{{$sparepart->nm_sparepart}}</option>
+              <option  value="{{$sparepart->id_sparepart}}">{{$sparepart->nm_sparepart}}</option>
             @endforeach
           </select>
         </div>
@@ -40,31 +40,21 @@
 
         <div class="form-group">
           <label>mesin:</label>
-          <select  name="peminjam" class="form-control select2" style="width: 100%;">
+          <select  name="mesin" class="form-control select2" style="width: 100%;">
             @if(count($mesins) === 0)
               <option disabled="disabled">data mesin kosong</option>
             @endif
             @foreach($mesins as $mesin)
-              <option value="{{$mesin->id_mesin}}">{{$mesin->nm_mesin}}</option>
+              <option  class="form-control" value="{{$mesin->id_mesin}}">{{$mesin->nm_mesin}}</option>
             @endforeach
           </select>
         </div>
-
         <div class="form-group">
-          <label>tanggal peminjaman : </label>
+          <label>jumlah barang yg dipinjam : </label>
           <div class="form-group" id="reservationdate">
-            <input type="date" value="${{$dateNow}}" name="tgl_peminjaman"  class="form-control"  />
+            <input type="text"  name="qty"  class="form-control"  />
           </div>
         </div>
-
-        <div class="form-group">
-          <label>Keterangan</label>
-          <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-            <textarea name="ket_rak" class="form-control" cols="30" rows="10"></textarea>
-          </div>
-        </div>
-
-
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-success">Simpan</button>

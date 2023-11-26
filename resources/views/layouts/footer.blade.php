@@ -62,6 +62,8 @@
 <script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{asset('AdminLTE')}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="{{asset('AdminLTE')}}/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -77,8 +79,11 @@
       "autoWidth": false,
       "responsive": true,
     });
+    $('.select2').select2()
   });
 </script>
+<!-- Select 2 -->
+<script src="{{asset('AdminLTE')}}/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- Ekko Lightbox -->
 <script src="{{asset('AdminLTE')}}/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>

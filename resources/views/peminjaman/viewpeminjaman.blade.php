@@ -46,10 +46,10 @@
         <tr>
           <td>{{ ++$i}}</td>
           <td>{{ $data->id_peminjaman }}</td>
-          <td>{{ $data->id_pegawai}}</td>
-          <td>{{ $data->id_sparepart }}</td>
-          <td>{{ $data->id_mesin}}</td>
-          <td>{{ $data->tanggal_peminjaman}}</td>
+          <td>{{ $data->peminjam}}</td>
+          <td>{{ $data->nm_sparepart }}</td>
+          <td>{{ $data->nm_mesin}}</td>
+          <td>{{ $data->tgl_peminjaman}}</td>
           <td>{{ $data->qty}}</td>
           <td>{{ $data->status}}</td>
           <td>
