@@ -88,6 +88,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('peminjaman')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Peminjaman 
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
           <li class="nav-header">Pengaturan</li>
           <li class="nav-item">
             <a href="{{route('mesin')}}" class="nav-link">

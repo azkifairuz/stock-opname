@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mesin;
+use App\Models\Pegawai;
 use App\Models\Peminjaman;
+use App\Models\Sparepart;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
-    
+
     public function index()
     {
-        
-        $peminjaman = Peminjaman::first()->paginate(5);
-        return view('peminjaman.viewpeminjama', compact('peminjaman'))
+
+        $peminjaman = Peminjaman::count() > 0
+            ? Peminjaman::first()->paginate(5) :
+            collect();
+        return view('peminjaman.viewpeminjaman', compact('peminjaman'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
-            
+
     }
 
     /**
@@ -22,7 +28,11 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        return view('peminjaman.tambahpeminjaman');
+        $spareparts = Sparepart::get();
+        $pegawais = Pegawai::get();
+        $mesins = Mesin::get();
+        $dateNow = Carbon::now('DD-MM-YYYY');
+        return view('peminjaman.tambahpeminjaman',compact('mesins','spareparts','pegawais','dateNow'));
     }
 
     /**
@@ -39,7 +49,7 @@ class PeminjamanController extends Controller
         $dataDevisi = new Peminjaman();
         $dataDevisi->nm_devisi = $request->nm_devisi;
         $dataDevisi->ket_devisi = $request->ket_devisi;
-        
+
         $dataDevisi->save();
         return redirect()->route('peminjaman');
         // return redirect()->route('devisi.index')
@@ -54,14 +64,14 @@ class PeminjamanController extends Controller
         //
     }
 
- 
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $devisi = Peminjaman::where('id_peminjaman',$id)->first();
+        $devisi = Peminjaman::where('id_peminjaman', $id)->first();
         return view('devisi.editdevisi', compact('devisi'));
     }
 
@@ -70,15 +80,15 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-       
-        
-        $dataDevisi = Devisi::where('id_devisi','=',$id);
+
+
+        $dataDevisi = Devisi::where('id_devisi', '=', $id);
         $dataDevisi->update([
             'nm_devisi' => $request->nm_devisi,
             'ket_devisi' => $request->ket_devisi
         ]);
         return redirect()->route('devisi');
-            // ->with('success', 'Jenis tagihan berhasil terupdate');
+        // ->with('success', 'Jenis tagihan berhasil terupdate');
     }
 
     /**
@@ -86,10 +96,10 @@ class PeminjamanController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataDevisi = Devisi::where('id_devisi','=',$id);
+        $dataDevisi = Devisi::where('id_devisi', '=', $id);
 
         $dataDevisi->delete();
         return redirect()->route('devisi');
-            // ->with('success', 'Jenis Tagihan Berhasil Di hapus');
+        // ->with('success', 'Jenis Tagihan Berhasil Di hapus');
     }
 }
