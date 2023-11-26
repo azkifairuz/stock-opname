@@ -17,13 +17,25 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{asset('AdminLTE')}}/index2.html"><b>Login</b>Inventory</a>
+    <a href="{{asset('AdminLTE')}}/index2.html"><b>Login</b> Inventory</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
+  @if($message = Session::get('error'))
+  <div id='alert-success' class="col-12 mb-5">
+    <div class="alert col-12 alert-danger mb-0 alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-ban"></i> {{$message}}!</h5>
+    
+    </div>
+   
+    <div class="progress progress-xs bg-light col-12 p-0  mt-0">
+        <div sty id="progress-bar" class="progress-bar bg-danger " role="progressbar" style="width: 100%; "></div>
+    </div>
+  </div>
+  @endif
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start this apps</p>
-
+      <p class="login-box-msg">Silahkan Masuk</p>
       <form action="{{ route('ceklogin') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
@@ -70,12 +82,12 @@
       </div> -->
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -88,5 +100,31 @@
 <script src="{{asset('AdminLTE')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE')}}/dist/js/adminlte.min.js"></script>
+<script>
+  
+
+// Menambahkan progres bar animasi
+let progressBar = $('#progress-bar');
+let progress = 100;
+let totalDuration = 2000; // Total durasi dalam milidetik
+let intervalDuration = 50; // Durasi interval dalam milidetik
+let steps = totalDuration / intervalDuration;
+
+let interval = setInterval(function() {
+    progress -= 100 / steps; // Mengurangi panjang progres bar setiap interval
+    progressBar.css('width', progress + '%');
+
+    if (progress <= 0) {
+        clearInterval(interval);
+        
+        // Menunggu sebentar sebelum memulai fadeOut
+        setTimeout(function() {
+            $('#alert-success').fadeOut('fast', function() {
+                $(this).remove(); // Menghapus alert setelah fade out selesai
+            });
+        }, 200); // Misalnya, menunggu 200ms sebelum fadeOut dimulai
+    }
+}, intervalDuration);
+</script>
 </body>
 </html>

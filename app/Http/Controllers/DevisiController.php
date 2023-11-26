@@ -45,9 +45,8 @@ class DevisiController extends Controller
         $dataDevisi->ket_devisi = $request->ket_devisi;
         
         $post = $dataDevisi->save();
-        return redirect()->route('devisi');
-        // return redirect()->route('devisi.index')
-        //     ->with('success', 'Jenis Tagihan Berhasil Ditambah');
+        return redirect()->route('devisi')
+            ->with('success', 'Devisi Berhasil Ditambah');
     }
 
     /**
@@ -86,8 +85,8 @@ class DevisiController extends Controller
             'nm_devisi' => $request->nm_devisi,
             'ket_devisi' => $request->ket_devisi
         ]);
-        return redirect()->route('devisi');
-            // ->with('success', 'Jenis tagihan berhasil terupdate');
+        return redirect()->route('devisi')
+            ->with('success', 'devisi berhasil terupdate');
     }
 
     /**
@@ -98,7 +97,7 @@ class DevisiController extends Controller
         $dataDevisi = Devisi::where('id_devisi','=',$id);
 
         $dataDevisi->delete();
-        return redirect()->route('devisi');
-            // ->with('success', 'Jenis Tagihan Berhasil Di hapus');
+        return redirect()->route('devisi')
+            ->with('success', 'devisi Berhasil Di hapus');
     }
 }

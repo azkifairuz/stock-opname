@@ -1,9 +1,7 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 1.0.0
     </div>
   </footer>
 
@@ -102,6 +100,30 @@
       $(this).addClass('active');
     });
   })
+</script>
+<script>
+// Menambahkan progres bar animasi
+let progressBar = $('#progress-bar');
+let progress = 100;
+let totalDuration = 2000; // Total durasi dalam milidetik
+let intervalDuration = 50; // Durasi interval dalam milidetik
+let steps = totalDuration / intervalDuration;
+
+let interval = setInterval(function() {
+    progress -= 100 / steps; // Mengurangi panjang progres bar setiap interval
+    progressBar.css('width', progress + '%');
+
+    if (progress <= 0) {
+        clearInterval(interval);
+        
+        // Menunggu sebentar sebelum memulai fadeOut
+        setTimeout(function() {
+            $('#alert-success').fadeOut('fast', function() {
+                $(this).remove(); // Menghapus alert setelah fade out selesai
+            });
+        }, 200); // Misalnya, menunggu 200ms sebelum fadeOut dimulai
+    }
+}, intervalDuration);
 </script>
 </body>
 </html>

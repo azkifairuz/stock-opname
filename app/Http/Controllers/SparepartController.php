@@ -15,9 +15,9 @@ class SparepartController extends Controller
      */
     public function index()
     {
-        $dataSparepart = Sparepart::join('rak','rak.id_rak','=','sparepart.id_rak')
-        ->join('vendor','vendor.id_vendor','=','sparepart.id_vendor')
-        ->get();
+        $dataSparepart = Sparepart::join('rak', 'rak.id_rak', '=', 'sparepart.id_rak')
+            ->join('vendor', 'vendor.id_vendor', '=', 'sparepart.id_vendor')
+            ->get();
         // $jnsTagihan = JnsTagihan::first()->paginate(5);
         return view('sparepart.viewsparepart', compact('dataSparepart'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -30,7 +30,7 @@ class SparepartController extends Controller
     {
         $rak = Rak::get();
         $vendor = Vendor::get();
-        return view('sparepart.tambahsparepart',compact('rak','vendor'));
+        return view('sparepart.tambahsparepart', compact('rak', 'vendor'));
     }
 
     /**
@@ -52,9 +52,10 @@ class SparepartController extends Controller
         $dataSparepart->image = $image->hashName();
         $dataSparepart->specifikasi = $request->specifikasi;
         $dataSparepart->id_vendor = $request->id_vendor;
-        
+
         $post = $dataSparepart->save();
-        return redirect()->route('sparepart');
+        return redirect()->route('sparepart')
+            ->with('success', 'devisi Berhasil Di hapus');
     }
 
     /**
@@ -72,10 +73,10 @@ class SparepartController extends Controller
     {
         $rak = Rak::get();
         $vendor = Vendor::get();
-        $dataSparepart = Sparepart::join('rak','rak.id_rak','=','sparepart.id_rak')
-        ->join('vendor','vendor.id_vendor','=','sparepart.id_vendor')
-        ->where('id_sparepart','=',$id)->first();
-        return view('sparepart.editsparepart', compact('dataSparepart','rak','vendor'));
+        $dataSparepart = Sparepart::join('rak', 'rak.id_rak', '=', 'sparepart.id_rak')
+            ->join('vendor', 'vendor.id_vendor', '=', 'sparepart.id_vendor')
+            ->where('id_sparepart', '=', $id)->first();
+        return view('sparepart.editsparepart', compact('dataSparepart', 'rak', 'vendor'));
     }
 
     /**
@@ -83,8 +84,8 @@ class SparepartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataSparepart = Sparepart::where('id_sparepart','=',$id);
-        $dataSparepart1 = Sparepart::where('id_sparepart','=',$id)->first();
+        $dataSparepart = Sparepart::where('id_sparepart', '=', $id);
+        $dataSparepart1 = Sparepart::where('id_sparepart', '=', $id)->first();
         if ($request->hasFile('image')) {
 
             //upload image
@@ -92,7 +93,7 @@ class SparepartController extends Controller
             $image->storeAs('public/sparepart', $image->hashName());
 
             //delete old image
-            Storage::delete('public/sparepart/'. $dataSparepart1->image);
+            Storage::delete('public/sparepart/' . $dataSparepart1->image);
 
             //update post with new image         
             $dataSparepart->update([
@@ -106,8 +107,8 @@ class SparepartController extends Controller
                 'id_vendor' => $request->id_vendor,
             ]);
 
-        }else{
-         
+        } else {
+
             //update post without image
             $dataSparepart->update([
                 'kd_sparepart' => $request->kd_sparepart,
@@ -118,9 +119,10 @@ class SparepartController extends Controller
                 'specifikasi' => $request->specifikasi,
                 'id_vendor' => $request->id_vendor,
             ]);
-      
+
         }
-        return redirect()->route('sparepart');
+        return redirect()->route('sparepart')
+            ->with('success', 'devisi Berhasil Di hapus');
     }
 
     /**
@@ -128,13 +130,14 @@ class SparepartController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataSparepart = Sparepart::where('id_sparepart','=',$id);
-        $dataSparepart1 = Sparepart::where('id_sparepart','=',$id)->first();
+        $dataSparepart = Sparepart::where('id_sparepart', '=', $id);
+        $dataSparepart1 = Sparepart::where('id_sparepart', '=', $id)->first();
 
         //delete old image
-        Storage::delete('public/sparepart/'. $dataSparepart1->image);
-        
+        Storage::delete('public/sparepart/' . $dataSparepart1->image);
+
         $dataSparepart->delete();
-        return redirect()->route('sparepart');
+        return redirect()->route('sparepart')
+            ->with('success', 'devisi Berhasil Di hapus');
     }
 }

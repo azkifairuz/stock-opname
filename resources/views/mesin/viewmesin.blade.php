@@ -7,8 +7,21 @@
 <section class="content">
   <div class="card">
     <div class="row card-header">
+    @if($message = Session::get('success'))
+  <div id='alert-success' class="col-12 mb-5">
+    <div class="alert col-12 alert-success mb-0 alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-check"></i> {{$message}}!</h5>
+    
+    </div>
+   
+    <div class="progress progress-xs bg-light col-12 p-0  mt-0">
+        <div sty id="progress-bar" class="progress-bar" role="progressbar" style="width: 100%; background-color: #006400;"></div>
+    </div>
+  </div>
+  @endif
         <div class="col-8">
-            <h3 class="card-title">Rak</h3> 
+            <h3 class="card-title">mesin</h3> 
         </div>
         <div class="col-4 d-flex justify-content-end">
             <a class="btn btn-success" href="{{route('add-mesin')}}">Tambah Data</a>
