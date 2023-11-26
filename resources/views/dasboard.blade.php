@@ -1,6 +1,6 @@
 @extends('layouts.master', 
     [
-        'title'=>'halaman dasboard dosnk',
+        'title'=>'Dashboard',
         'nm_menu'=>'dashboard'
     ])
 @section('content')
