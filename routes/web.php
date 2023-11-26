@@ -4,6 +4,7 @@ use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DevisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\RakController;
 use App\Http\Controllers\SparepartController;
@@ -69,3 +70,11 @@ Route::post('/add-sparepart-action',[SparepartController::class,'store'])->name(
 Route::get('/edit-sparepart/{id}',[SparepartController::class,'edit'])->name('edit-sparepart'); //form untuk add
 Route::post('/edit-sparepart-action/{id}',[SparepartController::class,'update'])->name('edit-sparepart-action'); //simpan edit
 Route::get('/del-sparepart-action/{id}',[SparepartController::class,'destroy'])->name('del-sparepart-action'); // hapus
+
+//pegawai
+Route::get('/pegawai',[PegawaiController::class,'index'])->name('pegawai'); // tampil data
+Route::get('/add-pegawai',[PegawaiController::class,'create'])->name('add-pegawai'); //form untuk add
+Route::post('/add-pegawai-action',[PegawaiController::class,'store'])->name('add-pegawai-action'); //simpan add
+Route::get('/edit-pegawai/{id}',[PegawaiController::class,'edit'])->name('edit-pegawai'); //form untuk add
+Route::post('/edit-pegawai-action/{id}',[PegawaiController::class,'update'])->name('edit-pegawai-action'); //simpan edit
+Route::get('/del-pegawai-action/{id}',[PegawaiController::class,'destroy'])->name('del-pegawai-action'); // hapus

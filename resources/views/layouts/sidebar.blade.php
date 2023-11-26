@@ -53,6 +53,15 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('pegawai')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Pegawai
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('rak')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
