@@ -68,13 +68,13 @@ class PeminjamanController extends Controller
         $dataPeminjaman->id_mesin = $request->mesin;
         $dataPeminjaman->id_sparepart = $request->sparepart;
         $dataPeminjaman->qty = $request->qty;
-        $dataPeminjaman->tgl_peminjaman = Carbon::now();;
+        $dataPeminjaman->tgl_peminjaman = Carbon::now();
+        ;
         $dataPeminjaman->status = 'belum dikembalikan';
 
         $dataPeminjaman->save();
-        return redirect()->route('peminjaman');
-        // return redirect()->route('devisi.index')
-        //     ->with('success', 'Jenis Tagihan Berhasil Ditambah');
+        return redirect()->route('peminjaman')
+            ->with('success', 'Peminjaman Berhasil dibuat');
     }
 
     /**
@@ -92,8 +92,8 @@ class PeminjamanController extends Controller
      */
     public function edit(string $id)
     {
-        $devisi = Peminjaman::where('id_peminjaman', $id)->first();
-        return view('devisi.editdevisi', compact('devisi'));
+        $peminjaman = Peminjaman::where('id_peminjaman', $id)->first();
+        return view('devisi.editpeminjaman', compact('peminjaman'));
     }
 
     /**
@@ -101,15 +101,17 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $dataPeminjaman = Peminjaman::find($id);
 
+        if (!$dataPeminjaman) {
+            return redirect()->route('peminjaman')->with('error', 'Peminjaman tidak ditemukan.');
+        }
 
-        $dataDevisi = Devisi::where('id_devisi', '=', $id);
-        $dataDevisi->update([
-            'nm_devisi' => $request->nm_devisi,
-            'ket_devisi' => $request->ket_devisi
+        $dataPeminjaman->update([
+            'status' => 'dikembalikan',
         ]);
-        return redirect()->route('devisi');
-        // ->with('success', 'Jenis tagihan berhasil terupdate');
+
+        return redirect()->route('peminjaman')->with('success', 'Peminjaman Selesai');
     }
 
     /**
@@ -117,10 +119,10 @@ class PeminjamanController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataDevisi = Devisi::where('id_devisi', '=', $id);
+        $dataDevisi = Peminjaman::find($id);
 
         $dataDevisi->delete();
-        return redirect()->route('devisi');
-        // ->with('success', 'Jenis Tagihan Berhasil Di hapus');
+        return redirect()->route('peminjaman')
+            ->with('success', 'Peminjaman berhasil Dibatalkan');
     }
 }
