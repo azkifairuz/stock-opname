@@ -4,6 +4,7 @@ use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DevisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\RakController;
 use App\Http\Controllers\SparepartController;
@@ -71,4 +72,12 @@ Route::middleware(['web', 'authentication'])->group(function () {
   Route::get('/edit-sparepart/{id}', [SparepartController::class, 'edit'])->name('edit-sparepart'); //form untuk add
   Route::post('/edit-sparepart-action/{id}', [SparepartController::class, 'update'])->name('edit-sparepart-action'); //simpan edit
   Route::get('/del-sparepart-action/{id}', [SparepartController::class, 'destroy'])->name('del-sparepart-action'); // hapus
+  
+  //peminjaman
+  Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman'); // tampil data
+  Route::get('/add-peminjaman', [PeminjamanController::class, 'create'])->name('add-peminjaman'); //form untuk add
+  Route::post('/add-peminjaman-action', [PeminjamanController::class, 'store'])->name('add-peminjaman-action'); //simpan add
+  Route::get('/edit-peminjaman/{id}', [PeminjamanController::class, 'edit'])->name('edit-sparepart'); //form untuk add
+  Route::post('/edit-peminjaman-action/{id}', [PeminjamanController::class, 'update'])->name('edit-peminjaman-action'); //simpan edit
+  Route::get('/del-peminjaman-action/{id}', [PeminjamanController::class, 'destroy'])->name('del-peminjaman-action'); // hapus
 });
