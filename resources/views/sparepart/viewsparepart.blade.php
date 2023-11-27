@@ -42,13 +42,14 @@
             <th>Specifikasi</th>
             <th>Vendor</th>
             <th>Keterangan</th>
+            <th>stok</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
             @if(count($dataSparepart) === 0)
                 <tr>
-                    <td colspan="6" align="center">Belum ada data devisi yang dibuat.</td>
+                    <td colspan="11" align="center">Belum ada data devisi yang dibuat.</td>
                 </tr>
             @else
             @foreach($dataSparepart as $data)
@@ -67,6 +68,7 @@
                         <td>{{ $data->specifikasi}}</td>
                         <td>{{ $data->nm_vendor}}</td>
                         <td>{{ $data->ket_sparepart}}</td>
+                        <td>{{ $data->qty_stok}}</td>
                         <td>
                             <a class="btn btn-primary" href="edit-sparepart/{{$data->id_sparepart}}">Edit</a>
                             <a class="btn btn-danger" href="del-sparepart-action/{{$data->id_sparepart}}">Delete</a>
