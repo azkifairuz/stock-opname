@@ -36,9 +36,10 @@ class MesinController extends Controller
         $dataMesin->nm_mesin = $request->nm_mesin;
         $dataMesin->specifikasi = $request->specifikasi;
         $dataMesin->ket_mesin = $request->ket_mesin;
-        
+
         $post = $dataMesin->save();
-        return redirect()->route('mesin');
+        return redirect()->route('mesin')
+            ->with('success', 'mesin Berhasil Di hapus');
     }
 
     /**
@@ -54,7 +55,7 @@ class MesinController extends Controller
      */
     public function edit(string $id)
     {
-        $dataMesin = Mesin::where('id_mesin',$id)->first();
+        $dataMesin = Mesin::where('id_mesin', $id)->first();
         return view('mesin.editmesin', compact('dataMesin'));
     }
 
@@ -63,13 +64,14 @@ class MesinController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataMesin = Mesin::where('id_mesin','=',$id);
+        $dataMesin = Mesin::where('id_mesin', '=', $id);
         $dataMesin->update([
             'nm_mesin' => $request->nm_mesin,
             'specifikasi' => $request->specifikasi,
             'ket_mesin' => $request->ket_mesin,
         ]);
-        return redirect()->route('mesin');
+        return redirect()->route('mesin')
+            ->with('success', 'mesin Berhasil Di hapus');
     }
 
     /**
@@ -77,9 +79,10 @@ class MesinController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataMesin = Mesin::where('id_mesin','=',$id);
+        $dataMesin = Mesin::where('id_mesin', '=', $id);
 
         $dataMesin->delete();
-        return redirect()->route('mesin');
+        return redirect()->route('mesin')
+            ->with('success', 'mesin Berhasil Di hapus');
     }
 }

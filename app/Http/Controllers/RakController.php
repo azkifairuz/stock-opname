@@ -36,9 +36,11 @@ class RakController extends Controller
         $dataRak->kd_rak = $request->kd_rak;
         $dataRak->nm_rak = $request->nm_rak;
         $dataRak->ket_rak = $request->ket_rak;
-        
+
         $post = $dataRak->save();
-        return redirect()->route('rak');
+        return redirect()->route('rak')
+            ->with('success', 'devisi Berhasil Di hapus');
+        ;
     }
 
     /**
@@ -54,7 +56,7 @@ class RakController extends Controller
      */
     public function edit(string $id)
     {
-        $dataRak = Rak::where('id_rak',$id)->first();
+        $dataRak = Rak::where('id_rak', $id)->first();
         return view('rak.editrak', compact('dataRak'));
     }
 
@@ -63,13 +65,15 @@ class RakController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataRak = Rak::where('id_rak','=',$id);
+        $dataRak = Rak::where('id_rak', '=', $id);
         $dataRak->update([
             'kd_rak' => $request->kd_rak,
             'nm_rak' => $request->nm_rak,
             'ket_rak' => $request->ket_rak
         ]);
-        return redirect()->route('rak');
+        return redirect()->route('rak')
+            ->with('success', 'devisi Berhasil Di hapus');
+        ;
     }
 
     /**
@@ -77,9 +81,11 @@ class RakController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataRak = Rak::where('id_rak','=',$id);
+        $dataRak = Rak::where('id_rak', '=', $id);
 
         $dataRak->delete();
-        return redirect()->route('rak');
+        return redirect()->route('rak')
+            ->with('success', 'devisi Berhasil Di hapus');
+        ;
     }
 }
