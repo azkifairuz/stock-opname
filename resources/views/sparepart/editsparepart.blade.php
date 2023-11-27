@@ -81,7 +81,12 @@
             </div>
             <label>*jika gambar tidak di update maka kosongkan saja..</label>
         </div>
-        
+        <div class="form-group">
+          <label>Stok Saat Ini:</label>
+            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                <input type="text" name="stok" class="form-control" data-target="#reservationdate" value="{{$dataSparepart->qty_stok}}"/> 
+            </div>
+        </div>
       </div>
         <div class="card-footer">
           <button type="submit" class="btn btn-success">Simpan</button>

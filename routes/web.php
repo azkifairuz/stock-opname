@@ -4,6 +4,7 @@ use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\DevisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\RakController;
@@ -56,6 +57,14 @@ Route::middleware(['web', 'authentication'])->group(function () {
   Route::get('/edit-vendor/{id}', [VendorController::class, 'edit'])->name('edit-vendor'); //form untuk add
   Route::post('/edit-vendor-action/{id}', [VendorController::class, 'update'])->name('edit-vendor-action'); //simpan edit
   Route::get('/del-vendor-action/{id}', [VendorController::class, 'destroy'])->name('del-vendor-action'); // hapus
+
+  //pegawai
+  Route::get('/pegawai',[PegawaiController::class,'index'])->name('pegawai'); // tampil data
+  Route::get('/add-pegawai',[PegawaiController::class,'create'])->name('add-pegawai'); //form untuk add
+  Route::post('/add-pegawai-action',[PegawaiController::class,'store'])->name('add-pegawai-action'); //simpan add
+  Route::get('/edit-pegawai/{id}',[PegawaiController::class,'edit'])->name('edit-pegawai'); //form untuk add
+  Route::post('/edit-pegawai-action/{id}',[PegawaiController::class,'update'])->name('edit-pegawai-action'); //simpan edit
+  Route::get('/del-pegawai-action/{id}',[PegawaiController::class,'destroy'])->name('del-pegawai-action'); // hapus
 
   //mesin
   Route::get('/mesin', [MesinController::class, 'index'])->name('mesin'); // tampil data

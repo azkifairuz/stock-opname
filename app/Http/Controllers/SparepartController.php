@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rak;
 use App\Models\Sparepart;
+use App\Models\Stok;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ class SparepartController extends Controller
     {
         $dataSparepart = Sparepart::join('rak','rak.id_rak','=','sparepart.id_rak')
         ->join('vendor','vendor.id_vendor','=','sparepart.id_vendor')
+        ->join('stok','stok.id_sparepart','=','sparepart.id_sparepart')
         ->get();
         // $jnsTagihan = JnsTagihan::first()->paginate(5);
         return view('sparepart.viewsparepart', compact('dataSparepart'))
@@ -39,6 +41,7 @@ class SparepartController extends Controller
     public function store(Request $request)
     {
         $dataSparepart = new Sparepart();
+        $dataStok = new Stok();
 
         $image = $request->file('image');
         $image->storeAs('public/sparepart', $image->hashName());
@@ -52,8 +55,12 @@ class SparepartController extends Controller
         $dataSparepart->image = $image->hashName();
         $dataSparepart->specifikasi = $request->specifikasi;
         $dataSparepart->id_vendor = $request->id_vendor;
-        
         $post = $dataSparepart->save();
+
+        $dataStok->id_sparepart = $dataSparepart->id;
+        $dataStok->qty_stok = $request->stok;
+        $post1 = $dataStok->save();
+
         return redirect()->route('sparepart');
     }
 
@@ -74,7 +81,8 @@ class SparepartController extends Controller
         $vendor = Vendor::get();
         $dataSparepart = Sparepart::join('rak','rak.id_rak','=','sparepart.id_rak')
         ->join('vendor','vendor.id_vendor','=','sparepart.id_vendor')
-        ->where('id_sparepart','=',$id)->first();
+        ->join('stok','stok.id_sparepart','=','sparepart.id_sparepart')
+        ->where('sparepart.id_sparepart','=',$id)->first();
         return view('sparepart.editsparepart', compact('dataSparepart','rak','vendor'));
     }
 
@@ -83,6 +91,7 @@ class SparepartController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $dataStok = Stok::where('id_sparepart','=',$id);
         $dataSparepart = Sparepart::where('id_sparepart','=',$id);
         $dataSparepart1 = Sparepart::where('id_sparepart','=',$id)->first();
         if ($request->hasFile('image')) {
@@ -105,6 +114,9 @@ class SparepartController extends Controller
                 'specifikasi' => $request->specifikasi,
                 'id_vendor' => $request->id_vendor,
             ]);
+            $dataStok->update([
+                'qty_stok' => $request->stok,
+            ]);
 
         }else{
          
@@ -118,6 +130,9 @@ class SparepartController extends Controller
                 'specifikasi' => $request->specifikasi,
                 'id_vendor' => $request->id_vendor,
             ]);
+            $dataStok->update([
+                'qty_stok' => $request->stok,
+            ]);
       
         }
         return redirect()->route('sparepart');
@@ -128,6 +143,7 @@ class SparepartController extends Controller
      */
     public function destroy(string $id)
     {
+        $dataStok = Stok::where('id_sparepart','=',$id);
         $dataSparepart = Sparepart::where('id_sparepart','=',$id);
         $dataSparepart1 = Sparepart::where('id_sparepart','=',$id)->first();
 
@@ -135,6 +151,7 @@ class SparepartController extends Controller
         Storage::delete('public/sparepart/'. $dataSparepart1->image);
         
         $dataSparepart->delete();
+        $dataStok->delete();
         return redirect()->route('sparepart');
     }
 }

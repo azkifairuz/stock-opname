@@ -80,7 +80,12 @@
                 <input type="file" name="image" id="" class="form-control">
             </div>
         </div>
-       
+        <div class="form-group">
+          <label>Stok Saat Ini:</label>
+            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                <input type="text" name="stok" class="form-control" data-target="#reservationdate"/> 
+            </div>
+        </div>
         
       </div>
         <div class="card-footer">
