@@ -1,0 +1,9 @@
+{
+    "i18n-ally.localesPaths": [
+        "public/AdminLTE/plugins/fullcalendar/locales",
+        "public/AdminLTE/plugins/jsgrid/i18n",
+        "public/AdminLTE/plugins/moment/locale",
+        "public/AdminLTE/plugins/summernote/lang",
+        "public/AdminLTE/plugins/select2/js/i18n"
+    ]
+}
