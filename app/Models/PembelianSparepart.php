@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class PembelianSparepart extends Model
 {
     use HasFactory;
+    protected $table = "pembelian_sparepart";
+    protected $fillable = [
+        'id_pembelian', 
+        'no_invoice', 
+        'tgl_pembelian',
+        'id_vendor',
+    ];
 }

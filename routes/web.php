@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\DasboardController;
+use App\Http\Controllers\DetPembelianSparepartController;
 use App\Http\Controllers\DevisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PembelianSparepartController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\RakController;
@@ -89,4 +91,22 @@ Route::middleware(['web', 'authentication'])->group(function () {
   Route::get('/edit-peminjaman/{id}', [PeminjamanController::class, 'edit'])->name('edit-sparepart'); //form untuk add
   Route::post('/edit-peminjaman-action/{id}', [PeminjamanController::class, 'update'])->name('edit-peminjaman-action'); //simpan edit
   Route::get('/del-peminjaman-action/{id}', [PeminjamanController::class, 'destroy'])->name('del-peminjaman-action'); // hapus
+
+  //pembelian
+  Route::get('/pembeliansparepart', [PembelianSparepartController::class, 'index'])->name('pembeliansparepart'); // tampil data
+  Route::get('/add-pembeliansparepart', [PembelianSparepartController::class, 'create'])->name('add-pembeliansparepart'); //form untuk add
+  Route::post('/add-pembeliansparepart-action', [PembelianSparepartController::class, 'store'])->name('add-pembeliansparepart-action'); //simpan add
+  Route::get('/edit-pembeliansparepart/{id}', [PembelianSparepartController::class, 'edit'])->name('edit-pembeliansparepart'); //form untuk add
+  Route::post('/edit-pembeliansparepart-action/{id}', [PembelianSparepartController::class, 'update'])->name('edit-pembeliansparepart-action'); //simpan edit
+  Route::get('/del-pembeliansparepart-action/{id}', [PembelianSparepartController::class, 'destroy'])->name('del-pembeliansparepart-action'); // hapus
+
+  //pembelian
+  Route::get('/detpembeliansparepart', [DetPembelianSparepartController::class, 'index'])->name('detpembeliansparepart'); // tampil data
+  Route::get('/add-detpembeliansparepart', [DetPembelianSparepartController::class, 'create'])->name('add-detpembeliansparepart'); //form untuk add
+  Route::post('/add-detpembeliansparepart-action', [DetPembelianSparepartController::class, 'store'])->name('add-detpembeliansparepart-action'); //simpan add
+  Route::get('/edit-detpembeliansparepart/{id}', [DetPembelianSparepartController::class, 'edit'])->name('edit-detpembeliansparepart'); //form untuk add
+  Route::post('/edit-detpembeliansparepart-action/{id}', [DetPembelianSparepartController::class, 'update'])->name('edit-detpembeliansparepart-action'); //simpan edit
+  Route::get('/del-detpembeliansparepart-action/{id}', [DetPembelianSparepartController::class, 'destroy'])->name('del-detpembeliansparepart-action'); // hapus
+
+
 });

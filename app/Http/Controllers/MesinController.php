@@ -71,7 +71,7 @@ class MesinController extends Controller
             'ket_mesin' => $request->ket_mesin,
         ]);
         return redirect()->route('mesin')
-            ->with('success', 'mesin Berhasil Di hapus');
+            ->with('success', 'mesin Berhasil Di Update');
     }
 
     /**
