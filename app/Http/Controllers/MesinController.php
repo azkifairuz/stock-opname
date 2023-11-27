@@ -90,7 +90,8 @@ class MesinController extends Controller
             'ket_mesin' => $request->ket_mesin,
         ]);
         return redirect()->route('mesin')
-            ->with('success', 'mesin Berhasil Di update');
+
+            ->with('success', 'mesin Berhasil Di Update');            
     }
 
     public function addSpMesin(Request $request)
@@ -105,6 +106,7 @@ class MesinController extends Controller
 
         return redirect()->route('show-mesin', ['id' => $dataSpMesin->id_mesin])
             ->with('success', 'sparepart Berhasil Di tambah');
+
     }
 
    
