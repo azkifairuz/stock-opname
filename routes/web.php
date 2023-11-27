@@ -71,8 +71,12 @@ Route::middleware(['web', 'authentication'])->group(function () {
   Route::get('/add-mesin', [MesinController::class, 'create'])->name('add-mesin'); //form untuk add
   Route::post('/add-mesin-action', [MesinController::class, 'store'])->name('add-mesin-action'); //simpan add
   Route::get('/edit-mesin/{id}', [MesinController::class, 'edit'])->name('edit-mesin'); //form untuk add
+  Route::get('/show-mesin/{id}', [MesinController::class, 'show'])->name('show-mesin'); //form untuk add
   Route::post('/edit-mesin-action/{id}', [MesinController::class, 'update'])->name('edit-mesin-action'); //simpan edit
   Route::get('/del-mesin-action/{id}', [MesinController::class, 'destroy'])->name('del-mesin-action'); // hapus
+
+  //sparepartMesin
+  Route::post('/add-spmesin-action', [MesinController::class, 'addSpMesin'])->name('add-spmesin-action'); //simpan add
 
   //sparepart
   Route::get('/sparepart', [SparepartController::class, 'index'])->name('sparepart'); // tampil data

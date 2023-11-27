@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mesin;
+use App\Models\Sparepart;
+use App\Models\SparepartMesin;
 use Illuminate\Http\Request;
 
 class MesinController extends Controller
@@ -13,7 +15,8 @@ class MesinController extends Controller
     public function index()
     {
         $dataMesin = Mesin::get();
-        // $jnsTagihan = JnsTagihan::first()->paginate(5);
+    
+        // $jnsTagihan = JnsTagan::first()->paginate(5);
         return view('mesin.viewmesin', compact('dataMesin'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -47,7 +50,23 @@ class MesinController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dataMesin = Mesin::where('id_mesin', $id)->first();
+        $spareparts = Sparepart::get();
+        $spMesin = SparepartMesin::count() > 0
+        ? SparepartMesin::join('mesin', 'sparepart_mesin.id_mesin', '=', 'mesin.id_mesin')
+            ->join('sparepart', 'sparepart_mesin.id_sparepart', '=', 'sparepart.id_sparepart')
+            ->select(
+                'sparepart_mesin.id_sparepart_mesin',
+                'mesin.id_mesin',
+                'sparepart.id_sparepart',
+                'mesin.nm_mesin',
+                'sparepart_mesin.qty',
+                'sparepart.nm_sparepart'
+            )
+            ->paginate(5) :
+        collect();
+        return view('mesin.detailmesin', compact('dataMesin','spareparts','spMesin'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     /**
@@ -71,9 +90,24 @@ class MesinController extends Controller
             'ket_mesin' => $request->ket_mesin,
         ]);
         return redirect()->route('mesin')
-            ->with('success', 'mesin Berhasil Di hapus');
+            ->with('success', 'mesin Berhasil Di update');
     }
 
+    public function addSpMesin(Request $request)
+    {
+        $dataSpMesin = new SparepartMesin();
+        // insert ke sql        
+        $dataSpMesin->id_mesin = $request->id_mesin;
+        $dataSpMesin->id_sparepart = $request->sparepart;
+        $dataSpMesin->qty = $request->qty;
+
+        $dataSpMesin->save();
+
+        return redirect()->route('show-mesin', ['id' => $dataSpMesin->id_mesin])
+            ->with('success', 'sparepart Berhasil Di tambah');
+    }
+
+   
     /**
      * Remove the specified resource from storage.
      */
