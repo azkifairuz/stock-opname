@@ -54,6 +54,7 @@
                         <td>{{ $data->ket_mesin }}</td>
                         <td>
                             <a class="btn btn-primary" href="edit-mesin/{{$data->id_mesin}}">Edit</a>
+                            <a class="btn btn-info" href="show-mesin/{{$data->id_mesin}}">Detail</a>
                             <a class="btn btn-danger" href="del-mesin-action/{{$data->id_mesin}}">Delete</a>
                         </form>
                     </td>
