@@ -32,6 +32,7 @@ class LoginController extends Controller
             if($password == $login->password){
                 Session::put('statuslogin',true);
                 Session::put('id_pegawai',$login->id_pegawai);
+
                 return redirect()->route('dasboard');
             }else{
                 return redirect()->route('login')->with('error','password yang anda masukkan salah');
