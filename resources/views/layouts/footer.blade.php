@@ -126,4 +126,4 @@ let interval = setInterval(function() {
 }, intervalDuration);
 </script>
 </body>
-</html>
+</html> 
